@@ -1,0 +1,5 @@
+# Ensure shell scripts keep LF line endings in all checkouts
+run-tests.sh text eol=lf
+*.sh text eol=lf
+*.py text eol=lf
+*.rs text eol=lf

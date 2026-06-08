@@ -1,0 +1,101 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build (${{ matrix.name }})
+    strategy:
+      matrix:
+        include:
+          - name: linux
+            os: ubuntu-latest
+            binary: adapter
+            plugin_binary: opendeck-displaypad-linux
+            deps: sudo apt-get update && sudo apt-get install -y pkg-config libudev-dev libhidapi-dev
+          - name: windows
+            os: windows-latest
+            binary: adapter.exe
+            plugin_binary: opendeck-displaypad-win.exe
+            deps: ""
+          - name: macos
+            os: macos-latest
+            binary: adapter
+            plugin_binary: opendeck-displaypad-mac
+            deps: ""
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install system deps
+        if: matrix.deps != ''
+        run: ${{ matrix.deps }}
+
+      - name: Build release
+        run: cargo build --workspace --release
+
+      - name: Upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: binary-${{ matrix.name }}
+          path: target/release/${{ matrix.binary }}
+
+  package:
+    name: Package Plugin
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Create sdPlugin zip
+        run: |
+          PLUGIN_DIR="com.vibecodedbymrwyss.plugins.displaypad.sdPlugin"
+          mkdir -p "$PLUGIN_DIR/assets"
+
+          # Copy manifest and assets
+          cp manifest.json "$PLUGIN_DIR/"
+          cp assets/icon.png "$PLUGIN_DIR/assets/"
+          cp assets/icon@2x.png "$PLUGIN_DIR/assets/"
+
+          # Copy platform binaries with correct names
+          cp artifacts/binary-linux/adapter "$PLUGIN_DIR/opendeck-displaypad-linux"
+          cp artifacts/binary-windows/adapter.exe "$PLUGIN_DIR/opendeck-displaypad-win.exe"
+          cp artifacts/binary-macos/adapter "$PLUGIN_DIR/opendeck-displaypad-mac"
+
+          chmod +x "$PLUGIN_DIR/opendeck-displaypad-linux" "$PLUGIN_DIR/opendeck-displaypad-mac"
+
+          zip -r "com.vibecodedbymrwyss.plugins.displaypad.sdPlugin.zip" "$PLUGIN_DIR"
+
+      - name: Upload plugin zip
+        uses: actions/upload-artifact@v4
+        with:
+          name: displaypad-plugin
+          path: com.vibecodedbymrwyss.plugins.displaypad.sdPlugin.zip
+
+  release:
+    name: Create Release
+    needs: package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: displaypad-plugin
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: com.vibecodedbymrwyss.plugins.displaypad.sdPlugin.zip

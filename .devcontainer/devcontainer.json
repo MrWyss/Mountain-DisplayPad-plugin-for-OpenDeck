@@ -1,0 +1,19 @@
+{
+  "name": "OpenDeck Mountain DisplayPad (Rust)",
+  "build": { "dockerfile": "Dockerfile" },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rust-lang.rust-analyzer",
+        "serayuzgur.crates",
+        "vadimcn.vscode-lldb"
+      ],
+      "settings": {
+        "editor.formatOnSave": true
+      }
+    }
+  },
+  "workspaceFolder": "/workspaces/opendeck-mountain_displaypad",
+  "postCreateCommand": "rustup component add rustfmt clippy || true; cargo fetch || true",
+  "remoteUser": "vscode"
+}

@@ -1,0 +1,16 @@
+[package]
+name = "driver"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+
+[features]
+default = []
+linux-hidraw = ["hidapi/linux-static-hidraw"]
+
+[dependencies]
+hex = "0.4"
+hidapi = { version = "1.3", default-features = false }
+
+[target."cfg(target_os = \"linux\")".dependencies]
+rusb = "0.9"

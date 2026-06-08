@@ -1,0 +1,20 @@
+{
+  "Name": "Mountain DisplayPad",
+  "Description": "Mountain DisplayPad plugin for OpenDeck",
+  "Author": "Vibe coded by MrWyss",
+  "Manufacturer": "MOUNTAIN",
+  "Version": "0.1.0",
+  "PluginUUID": "com.vibecodedbymrwyss.plugins.displaypad",
+  "CodePathLin": "opendeck-displaypad-linux",
+  "CodePathMac": "opendeck-displaypad-mac",
+  "CodePathWin": "opendeck-displaypad-win.exe",
+  "Icon": "assets/icon",
+  "Category": "Hardware",
+  "OS": [
+    { "Platform": "linux" },
+    { "Platform": "mac", "Version": "11.0" },
+    { "Platform": "windows", "Version": "10" }
+  ],
+  "Actions": [],
+  "DeviceNamespace": "50"
+}

@@ -1,5 +1,5 @@
 # OpenDeck Mountain DisplayPad Plugin
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/MrWyss/Mountain-DisplayPad-plugin-for-OpenDeck/release.yml) ![GitHub last commit](https://img.shields.io/github/last-commit/MrWyss/Mountain-DisplayPad-plugin-for-OpenDeck) ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/mrwyss/Mountain-DisplayPad-plugin-for-OpenDeck/total)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/MrWyss/Mountain-DisplayPad-plugin-for-OpenDeck/release.yml) ![GitHub last commit](https://img.shields.io/github/last-commit/MrWyss/Mountain-DisplayPad-plugin-for-OpenDeck) ![GitHub Downloads (specific asset, all releases)](https://img.shields.io/github/downloads/MrWyss/Mountain-DisplayPad-plugin-for-OpenDeck/com.vibecodedbymrwyss.plugins.displaypad.sdPlugin.zip?displayAssetName=false&link=https%3A%2F%2Fgithub.com%2FMrWyss%2FMountain-DisplayPad-plugin-for-OpenDeck%2Freleases)
 
 
 <p align="center">
